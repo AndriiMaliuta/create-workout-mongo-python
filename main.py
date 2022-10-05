@@ -9,15 +9,14 @@ import datetime
 def create_workout(request):
     if request.method == "POST":
         request_json = request.get_json(silent=True)
+        if request_json:
+            print(request_json)
         # request_args = request.args
         client = pymongo.MongoClient(os.getenv("DB_URL"))
         db = client['workouts']
         work_collection = db['workouts']
         today = datetime.datetime.now()
-        if "comments" in request_json \
-                and "sets" in request_json \
-                and "workout_date" in request_json \
-                and "workout_type" in request_json:
+        if request_json:
             workout = {
                 "record": round(datetime.datetime.now().timestamp()),
                 "sets": request_json["sets"],
