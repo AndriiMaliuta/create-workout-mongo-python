@@ -1,14 +1,15 @@
+import os
+
 import functions_framework
 import pymongo
 import datetime
 
 
 @functions_framework.http
-def hello_http(request):
+def create_workout(request):
     request_json = request.get_json(silent=True)
     # request_args = request.args
-    client = pymongo.MongoClient(
-        "mongodb+srv://mongo-user1:IctNC0513@cluster0.t1yi6.mongodb.net/?retryWrites=true&w=majority")
+    client = pymongo.MongoClient(os.getenv("DB_URL"))
     db = client['workouts']
     work_collection = db['workouts']
     workout = {
